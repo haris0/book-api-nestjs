@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Books extends BaseEntity {
+export class Book extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -10,6 +10,9 @@ export class Books extends BaseEntity {
 
   @Column()
   author: string;
+
+  @Column()
+  category: string;
 
   @Column()
   year: number;
