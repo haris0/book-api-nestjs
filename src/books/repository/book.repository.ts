@@ -1,4 +1,7 @@
-import { InternalServerErrorException } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateBookDto } from '../dto/create-book.dto';
 import { FilterBookDto } from '../dto/filter-book.dto';
@@ -42,6 +45,16 @@ export class BookRepository extends Repository<Book> {
     } catch (error) {
       throw new InternalServerErrorException();
     }
+  };
+
+  getBookById = async (id: string): Promise<Book> => {
+    const book = await this.findOne(id);
+
+    if (!book) {
+      throw new NotFoundException(`Book with id ${id} not found`);
+    }
+
+    return book;
   };
 
   createBook = async (payload: CreateBookDto): Promise<Book> => {

@@ -16,6 +16,10 @@ export class BooksService {
     return this.booksRepository.getBooks(filter);
   };
 
+  getBookById = async (id: string): Promise<Book> => {
+    return this.booksRepository.getBookById(id);
+  };
+
   createBook = async (payload: CreateBookDto): Promise<Book> => {
     return this.booksRepository.createBook(payload);
   };

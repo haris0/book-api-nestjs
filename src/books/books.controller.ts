@@ -1,4 +1,4 @@
-import { Get, Post, Query, Body, Controller } from '@nestjs/common';
+import { Get, Post, Query, Body, Controller, Param } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FilterBookDto } from './dto/filter-book.dto';
@@ -11,6 +11,11 @@ export class BooksController {
   @Get()
   async getBooks(@Query() filter: FilterBookDto): Promise<Book[]> {
     return this.bookService.getBooks(filter);
+  }
+
+  @Get(':id')
+  async getBookById(@Param('id') id: string): Promise<Book> {
+    return this.bookService.getBookById(id);
   }
 
   @Post()
