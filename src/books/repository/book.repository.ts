@@ -5,6 +5,7 @@ import {
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateBookDto } from '../dto/create-book.dto';
 import { FilterBookDto } from '../dto/filter-book.dto';
+import { UpdateBookDto } from '../dto/update-book.dto';
 import { Book } from '../entity/book.entity';
 
 @EntityRepository(Book)
@@ -65,6 +66,27 @@ export class BookRepository extends Repository<Book> {
     book.author = author;
     book.category = category;
     book.year = year;
+
+    try {
+      book.save();
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+
+    return book;
+  };
+
+  updateBookById = async (
+    id: string,
+    payload: UpdateBookDto,
+  ): Promise<Book> => {
+    const { title, author, category, year } = payload;
+
+    const book = await this.getBookById(id);
+    if (title) book.title = title;
+    if (author) book.author = author;
+    if (category) book.category = category;
+    if (year !== undefined) book.year = year;
 
     try {
       book.save();
