@@ -31,4 +31,8 @@ export class BooksService {
   ): Promise<Book> => {
     return this.booksRepository.updateBookById(id, payload);
   };
+
+  deleteBook = async (id: string): Promise<void> => {
+    return this.booksRepository.deleteBook(id);
+  };
 }

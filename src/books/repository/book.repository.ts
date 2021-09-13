@@ -96,4 +96,11 @@ export class BookRepository extends Repository<Book> {
 
     return book;
   };
+
+  deleteBook = async (id: string): Promise<void> => {
+    const result = await this.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Book with id ${id} is not found`);
+    }
+  };
 }
