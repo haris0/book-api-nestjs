@@ -8,6 +8,7 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
+import { UUIDValidationPipe } from 'src/pipes/uuid-validation.pipe';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FilterBookDto } from './dto/filter-book.dto';
@@ -24,7 +25,9 @@ export class BooksController {
   }
 
   @Get(':id')
-  async getBookById(@Param('id') id: string): Promise<Book> {
+  async getBookById(
+    @Param('id', UUIDValidationPipe) id: string,
+  ): Promise<Book> {
     return this.bookService.getBookById(id);
   }
 
@@ -35,14 +38,14 @@ export class BooksController {
 
   @Put(':id')
   async updateBookById(
-    @Param('id') id: string,
+    @Param('id', UUIDValidationPipe) id: string,
     @Body() payload: UpdateBookDto,
   ): Promise<Book> {
     return this.bookService.updateBookById(id, payload);
   }
 
   @Delete(':id')
-  async deleteBook(@Param('id') id: string): Promise<void> {
+  async deleteBook(@Param('id', UUIDValidationPipe) id: string): Promise<void> {
     return this.bookService.deleteBook(id);
   }
 }
